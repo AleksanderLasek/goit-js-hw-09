@@ -56,32 +56,16 @@ const options = {
           timeLeft = target - now;
           timeLeft = convertMs(timeLeft);
 
-          if (timeLeft.days < 10) {
-            $days.textContent = '0' + `${timeLeft.days}`;
-          } else {
-            $days.textContent = `${timeLeft.days}`;
-          }
-          if (timeLeft.hours < 10) {
-            $hours.textContent = '0' + `${timeLeft.hours}`;
-          } else {
-            $hours.textContent = `${timeLeft.hours}`;
-          }
-          if (timeLeft.minutes < 10) {
-            $minutes.textContent = '0' + `${timeLeft.minutes}`;
-          } else {
-            $minutes.textContent = `${timeLeft.minutes}`;
-          }
-          if (timeLeft.seconds < 10) {
-            $seconds.textContent = '0' + `${timeLeft.seconds}`;
-          } else {
-            $seconds.textContent = `${timeLeft.seconds}`;
-          }
+          $days.textContent = addLeadingZero(timeLeft.days);
+          $hours.textContent = addLeadingZero(timeLeft.hours);
+          $minutes.textContent = addLeadingZero(timeLeft.minutes);
+          $seconds.textContent = addLeadingZero(timeLeft.seconds);
 
           if (
             $days.textContent === '00' &&
             $hours.textContent === '00' &&
-            $minutes.textContent === '0' &&
-            $seconds.textContent === '0'
+            $minutes.textContent === '00' &&
+            $seconds.textContent === '00'
           ) {
             clearInterval(countdownId);
           }
@@ -97,3 +81,11 @@ const options = {
 
 const $input = document.querySelector('#datetime-picker');
 flatpickr($input, options);
+
+function addLeadingZero(value) {
+  if (value < 10) {
+    let valueStr = value.toString();
+    valueStr = valueStr.padStart(2, '0');
+    return valueStr;
+  } else return value.toString();
+}
